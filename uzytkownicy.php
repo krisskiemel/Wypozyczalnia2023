@@ -72,6 +72,7 @@
                     ?>
                     <h2>NOWY UŻYTKOWNIK</h2>
                     <form action="uzytkownicy.php" method="GET">
+                        <input type="hidden" name="typ" value="nowydb">
                         <label for="imie">Imię:</label><br>
                         <input type="text" id="imie" name="imie" maxlength="20"><br>
                         <label for="nazwisko">Nazwisko:</label><br>
@@ -86,14 +87,59 @@
 
                     <?php
                     break;
+                case "nowydb":
+                    $imie = $_REQUEST['imie'];
+                    $nazwisko = $_REQUEST['nazwisko'];
+                    $pesel = $_REQUEST['pesel'];
+                    $login = $_REQUEST['login'];
+                    $haslo = $_REQUEST['haslo'];
+                    $sql1 = "SELECT * FROM pracownicy WHERE login='$login'";
+                    $result = mysqli_query($connect, $sql1);
+                    if ($row = mysqli_fetch_array($result)) {
+                        echo "Podany login: $login istnieje już w systemie.<br>";
+                        echo "<button onClick='history.go(-1)'>Powrót</button>";
+                    } else {
+                        $sql2 = "INSERT INTO pracownicy (imie, nazwisko, pesel, login, haslo)
+                        VALUES ('$imie', '$nazwisko', '$pesel', '$login', '$haslo')";
+                        mysqli_query($connect, $sql2);
+                        echo "Dodano nowego użytkownika:<br>
+                            Imię: $imie<br>Nazwisko: $nazwisko<br>Login: $login<br>";
+                        echo "<button onClick='history.go(-2)'>Powrót</button>";
+                    }
+                    break;
                 case "edytuj":
                     echo "EDYTUJ";
                     break;
                 case "usun":
-                    echo "USUŃ";
-                    break;        
+                    $id = $_REQUEST['id'];
+                    $sql = "SELECT imie, nazwisko FROM pracownicy WHERE id_pracownika = $id";
+                    $result = mysqli_query($connect, $sql);
+                    $row = mysqli_fetch_array($result);
+                    ?>
+                    <h2>USUWANIE UŻYTKOWNIKA</h2>
+                    Czy na pewno chcesz usunąć użytkownika: <?php echo $row['imie'] . " " . $row['nazwisko'];?><br>
+                    <form action="uzytkownicy.php" method="GET">
+                        <input type="hidden" name="typ" value="usundb">
+                        <input type="hidden" name="id" value="<?php echo $id;?>">
+                        <input type="hidden" name="imie" value="<?php echo $row['imie'];?>">
+                        <input type="hidden" name="nazwisko" value="<?php echo $row['nazwisko'];?>">
+                        <input type="submit" value="Tak">
+                    </form>
+                    <button onClick='history.go(-1)'>Nie</button> 
+                    <?php
+                    break;
+                case "usundb":
+                    $id = $_REQUEST['id'];
+                    $imie = $_REQUEST['imie'];
+                    $nazwisko = $_REQUEST['nazwisko'];
+                    $sql = "DELETE FROM pracownicy WHERE id_pracownika = $id";
+                    mysqli_query($connect, $sql);
+                    echo "Usunięto użytkownika: ID: $id $imie $nazwisko<br>";
+                    echo "<button onClick='history.go(-2)'>Powrót</button>";
+                    break;
             }
             ?>
+            <button onclick="windows.location('uzytkownicy.php')">powrót</button>
         </section>
     </div>
 </body>
