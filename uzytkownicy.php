@@ -70,7 +70,7 @@
                     break;
                 case "nowy":
                     ?>
-                    <h2>NOWY</h2>
+                    <h2>NOWY UŻYTKOWNIK</h2>
                     <form action="uzytkownicy.php" method="GET">
                         <label for="imie">Imię:</label><br>
                         <input type="text" id="imie" name="imie" maxlength="20"><br>
