@@ -22,7 +22,8 @@
             require('menu.php');
         ?>
         <section>
-        <?php    
+            <?php  
+            
             switch ($typ) {
                 case "":
                     $sql = "SELECT id_pracownika, imie, nazwisko, pesel, login FROM pracownicy ORDER BY nazwisko, imie";
@@ -52,7 +53,7 @@
                         echo "<td>" . $row['login'] . "</td>";
                         echo "<td>";
                         echo "  <form action='uzytkownicy.php' method='GET'>";
-                        echo "    <input type='hidden' name='typ' value='edycja'>";
+                        echo "    <input type='hidden' name='typ' value='edytuj'>";
                         echo "    <input type='hidden' name='id' value='" . $row['id_pracownika'] . "'>";
                         echo "    <input type='submit' value='Edytuj'>";
                         echo "  </form>";
@@ -64,10 +65,33 @@
 
                         echo "</td>";
                         echo "</tr>";
-                    }
-                    ?>    
-                    </table>
-            <?php
+                    }    
+                    echo "</table>";
+                    break;
+                case "nowy":
+                    ?>
+                    <h2>NOWY</h2>
+                    <form action="uzytkownicy.php" method="GET">
+                        <label for="imie">Imię:</label><br>
+                        <input type="text" id="imie" name="imie" maxlength="20"><br>
+                        <label for="nazwisko">Nazwisko:</label><br>
+                        <input type="text" id="nazwisko" name="nazwisko" maxlength="50"><br>
+                        <label for="pesel">Pesel:</label><br>
+                        <input type="text" id="pesel" name="pesel" maxlength="11"><br>
+                        <label for="login">Login:</label><br>
+                        <input type="text" id="login" name="login" maxlength="6"><br>
+                        <input type="hidden" name="haslo" value="<?php echo md5('test');?>"><br>
+                        <input type="submit" value="Utwórz">
+                    </form>
+
+                    <?php
+                    break;
+                case "edytuj":
+                    echo "EDYTUJ";
+                    break;
+                case "usun":
+                    echo "USUŃ";
+                    break;        
             }
             ?>
         </section>
