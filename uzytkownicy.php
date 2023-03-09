@@ -31,7 +31,7 @@
                     echo "  <form action='uzytkownicy.php' method='GET'>";
                     echo "    <input type='hidden' name='typ' value='nowy'>";
                     
-                    echo "    <input type='submit' value='Nowy użytkownik'>";
+                    echo "    <input type='submit' class='button' value='Nowy użytkownik'>";
                     echo "  </form>"; 
                     ?>
                     <table>
@@ -55,12 +55,12 @@
                         echo "  <form action='uzytkownicy.php' method='GET'>";
                         echo "    <input type='hidden' name='typ' value='edytuj'>";
                         echo "    <input type='hidden' name='id' value='" . $row['id_pracownika'] . "'>";
-                        echo "    <input type='submit' value='Edytuj'>";
+                        echo "    <input type='submit' class='button' value='Edytuj'>";
                         echo "  </form>";
                         echo "  <form action='uzytkownicy.php' method='GET'>";
                         echo "    <input type='hidden' name='typ' value='usun'>";
                         echo "    <input type='hidden' name='id' value='" . $row['id_pracownika'] . "'>";
-                        echo "    <input type='submit' value='Usuń'>";
+                        echo "    <input type='submit' class='button' value='Usuń'>";
                         echo "  </form>";
 
                         echo "</td>";
@@ -82,7 +82,7 @@
                         <label for="login">Login:</label><br>
                         <input type="text" id="login" name="login" maxlength="6"><br>
                         <input type="hidden" name="haslo" value="<?php echo md5('test');?>"><br>
-                        <input type="submit" value="Utwórz">
+                        <input type="submit" class='button' value="Utwórz">
                     </form>
 
                     <?php
@@ -97,14 +97,14 @@
                     $result = mysqli_query($connect, $sql1);
                     if ($row = mysqli_fetch_array($result)) {
                         echo "Podany login: $login istnieje już w systemie.<br>";
-                        echo "<button onClick='history.go(-1)'>Powrót</button>";
+                        echo "<button class='button' onClick='history.go(-1)'>Powrót</button>";
                     } else {
                         $sql2 = "INSERT INTO pracownicy (imie, nazwisko, pesel, login, haslo)
                         VALUES ('$imie', '$nazwisko', '$pesel', '$login', '$haslo')";
                         mysqli_query($connect, $sql2);
                         echo "Dodano nowego użytkownika:<br>
                             Imię: $imie<br>Nazwisko: $nazwisko<br>Login: $login<br>";
-                        echo "<button onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
+                        echo "<button class='button' onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
                     }
                     break;
                 case "edytuj":
@@ -127,7 +127,7 @@
                         <label for="login">Login:</label><br>
                         <input type="text" id="login" name="login" maxlength="6" value="<?php echo $row['login']?>"><br>
                         <br>
-                        <input type="submit" value="Zachowaj zmiany">
+                        <input type="submit" class='button' value="Zachowaj zmiany">
                     </form>
                     <?php
                     break;
@@ -140,7 +140,7 @@
                     mysqli_query($connect, $sql);
                     echo "Zmieniono dane użytkownika:<br>
                             Imię: $imie<br>Nazwisko: $nazwisko<br>Login: $login<br>";
-                    echo "<button onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
+                    echo "<button class='button' onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
                     break;
                 case "usun":
                     $id = $_REQUEST['id'];
@@ -155,9 +155,9 @@
                         <input type="hidden" name="id" value="<?php echo $id;?>">
                         <input type="hidden" name="imie" value="<?php echo $row['imie'];?>">
                         <input type="hidden" name="nazwisko" value="<?php echo $row['nazwisko'];?>">
-                        <input type="submit" value="Tak">
+                        <input type="submit" class='button' value="Tak">
                     </form>
-                    <button onClick='history.go(-1)'>Nie</button> 
+                    <button class='button' onClick='history.go(-1)'>Nie</button> 
                     <?php
                     break;
                 case "usundb":
@@ -167,7 +167,7 @@
                     $sql = "DELETE FROM pracownicy WHERE id_pracownika = $id";
                     mysqli_query($connect, $sql);
                     echo "Usunięto użytkownika: ID: $id $imie $nazwisko<br>";
-                    echo "<button onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
+                    echo "<button class='button' onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
                     break;
             }
             ?>

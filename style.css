@@ -65,10 +65,26 @@ a:hover {
 }
 
 table, th, tr, td {
+    text-align: center;
     border: 1px solid black;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+th {
+    background-color: var(--BColor);
+    color: white;
+    padding: 5px;
+}
+
+.button {
+    background-color: var(--BColor);
+    color: white;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    float:left;
 }
