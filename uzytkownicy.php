@@ -108,7 +108,39 @@
                     }
                     break;
                 case "edytuj":
-                    echo "EDYTUJ";
+                    $id = $_REQUEST['id'];
+                    $sql = "SELECT imie, nazwisko, pesel, login FROM pracownicy WHERE id_pracownika = $id";
+                    $result = mysqli_query($connect, $sql);
+                    $row = mysqli_fetch_array($result);
+                    ?>
+                    <h2>EDYCJA UŻYTKOWNIKA</h2>
+                    <form action="uzytkownicy.php" method="GET">
+                        <input type="hidden" name="typ" value="edytujdb">
+                        <label for="imie">Id:</label><br>
+                        <input type="text" id="id" name="id" value="<?php echo $id;?>" readonly><br>
+                        <label for="imie">Imię:</label><br>
+                        <input type="text" id="imie" name="imie" maxlength="20" value="<?php echo $row['imie']?>"><br>
+                        <label for="nazwisko">Nazwisko:</label><br>
+                        <input type="text" id="nazwisko" name="nazwisko" maxlength="50" value="<?php echo $row['nazwisko']?>"><br>
+                        <label for="pesel">Pesel:</label><br>
+                        <input type="text" id="pesel" name="pesel" maxlength="11" value="<?php echo $row['pesel']?>" disabled><br>
+                        <label for="login">Login:</label><br>
+                        <input type="text" id="login" name="login" maxlength="6" value="<?php echo $row['login']?>"><br>
+                        <br>
+                        <input type="submit" value="Zachowaj zmiany">
+                    </form>
+                    <?php
+                    break;
+                case "edytujdb":
+                    $id = $_REQUEST['id'];
+                    $imie = $_REQUEST['imie'];
+                    $nazwisko = $_REQUEST['nazwisko'];
+                    $login = $_REQUEST['login'];
+                    $sql = "UPDATE pracownicy SET imie='$imie', nazwisko='$nazwisko', login='$login' WHERE id_pracownika=$id";
+                    mysqli_query($connect, $sql);
+                    echo "Zmieniono dane użytkownika:<br>
+                            Imię: $imie<br>Nazwisko: $nazwisko<br>Login: $login<br>";
+                    echo "<button onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
                     break;
                 case "usun":
                     $id = $_REQUEST['id'];
