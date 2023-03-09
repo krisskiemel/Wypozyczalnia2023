@@ -135,11 +135,10 @@
                     $sql = "DELETE FROM pracownicy WHERE id_pracownika = $id";
                     mysqli_query($connect, $sql);
                     echo "Usunięto użytkownika: ID: $id $imie $nazwisko<br>";
-                    echo "<button onClick='history.go(-2)'>Powrót</button>";
+                    echo "<button onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
                     break;
             }
             ?>
-            <button onclick="windows.location('uzytkownicy.php')">powrót</button>
         </section>
     </div>
 </body>
