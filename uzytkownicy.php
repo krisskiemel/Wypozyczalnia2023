@@ -104,7 +104,7 @@
                         mysqli_query($connect, $sql2);
                         echo "Dodano nowego użytkownika:<br>
                             Imię: $imie<br>Nazwisko: $nazwisko<br>Login: $login<br>";
-                        echo "<button onClick='history.go(-2)'>Powrót</button>";
+                        echo "<button onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
                     }
                     break;
                 case "edytuj":
