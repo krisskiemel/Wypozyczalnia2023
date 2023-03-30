@@ -1,5 +1,6 @@
 <?php
     require('connect.php');
+    session_start();
     if (isset($_REQUEST['typ'])) {
         $typ = $_REQUEST['typ'];
     } else {

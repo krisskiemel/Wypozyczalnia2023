@@ -1,3 +1,7 @@
+<?php
+    require('connect.php');
+    sesion_start();
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
