@@ -1,5 +1,6 @@
 <?php 
     require('connect.php');
+    session_start();
 ?>    
 
 <!DOCTYPE html>
@@ -15,18 +16,27 @@
     <div>
         <?php
             if (isset($_REQUEST['login']) && isset($_REQUEST['haslo'])) {
-                $option = 5;
-                require('menu.php');
+                
                 $sql = "SELECT login, haslo FROM pracownicy WHERE login = '{$_REQUEST['login']}'";
                 $result = mysqli_query($connect, $sql);
                 if ($row = mysqli_fetch_array($result)) {
                     if (md5($_REQUEST['haslo']) == $row['haslo']) {
-                        echo "Logowanie poprawne";
+                        $_SESSION['zalogowany'] = true;
+                        $_SESSION['login'] = $row['login'];
+                        $option = 5;
+                        require('menu.php');
+                        echo "<section>Logowanie poprawne</section>";
                     } else {
-                        echo "Logowanie niepoprawne. Błędne hasło.";
+                        session_destroy();
+                        $option = 5;
+                        require('menu.php');
+                        echo "<section>Logowanie niepoprawne. Błędne hasło.</section>";
                     }
                 } else {
-                    echo "Logowanie niepoprawne. Podany login nie istnieje.";
+                    session_destroy();
+                    $option = 5;
+                    require('menu.php');
+                    echo "<section>Logowanie niepoprawne. Podany login nie istnieje.</section>";
                 }
             } else {
                 $option = 5;
@@ -37,7 +47,7 @@
                         <label for="login">login:</label><br>
                         <input type="text" id="login" name="login" maxlength="10" required>
                         <br>
-                        <label for="password">hasło:</label><br>
+                        <label for="haslo">hasło:</label><br>
                         <input type="password" id="haslo" name="haslo" maxlength="10" required>
                         <br>
                         <input type="submit" class="button" value="Zaloguj">

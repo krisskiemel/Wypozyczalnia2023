@@ -30,7 +30,11 @@
         } else {
             $act = "";
         }
-        echo "<li class='opcja logowanie'><a$act href='logowanie.php'>Logowanie</a></li>\n";
+        if ($_SESSION['zalogowany']) {
+            echo "<li class='opcja logowanie'><a> Użytkownik: {$_SESSION['login']}</a></li>\n";
+        } else {
+            echo "<li class='opcja logowanie'><a$act href='logowanie.php'>Logowanie</a></li>\n";
+        }    
         ?>       
     </ul>
 </nav>
