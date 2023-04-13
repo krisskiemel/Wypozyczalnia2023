@@ -39,9 +39,17 @@
                     echo "<section>Logowanie niepoprawne. Podany login nie istnieje.</section>";
                 }
             } else {
-                $option = 5;
-                require('menu.php');
+                if (isset($_REQUEST['logout'])) {
+                    $_SESSION['zalogowany'] = false;
+                    session_destroy();
+                    $option = 5;
+                    require('menu.php');
+                    echo "<section>Wylogowano.</section>";
+                } else {
+                    $option = 5;
+                    require('menu.php');
                 ?>
+
                 <section>
                     <form action="logowanie.php" method="GET">
                         <label for="login">login:</label><br>
@@ -54,6 +62,7 @@
                     </form>
                 </section>
             <?php
+                }
             }
             ?>
     </div>

@@ -30,8 +30,12 @@
         } else {
             $act = "";
         }
-        if ($_SESSION['zalogowany']) {
-            echo "<li class='opcja logowanie'><a>Użytkownik: {$_SESSION['login']}</a></li>\n";
+        if (isset($_SESSION['zalogowany'])) {
+            if ($_SESSION['zalogowany'] == 'true') {
+                echo "<li class='opcja logowanie'><a href='logowanie.php?logout=true'>U: {$_SESSION['login']} Wyloguj</a></li>\n";
+            } else {
+                echo "<li class='opcja logowanie'><a$act href='logowanie.php'>Logowanie</a></li>\n";
+            }
         } else {
             echo "<li class='opcja logowanie'><a$act href='logowanie.php'>Logowanie</a></li>\n";
         }    
