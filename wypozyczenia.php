@@ -82,11 +82,23 @@
                         <input type="hidden" name="vin" value="">
                         <label for="klient">Klient:</label><br>
                         <select id="klient" name="klient">
-                            <option value="test">TEST</option>
+                            <?php
+                            $sql1 = "SELECT id_klienta, imie, nazwisko, nr_dowodu FROM klienci ORDER BY nazwisko, imie";
+                            $result1 = mysqli_query($connect, $sql1);
+                            while ($row1 = mysqli_fetch_array($result1)) {
+                                echo "<option value='{$row1['id_klienta']}'>{$row1['nazwisko']} {$row1['imie']} {$row1['nr_dowodu']}</option>\n";
+                            }
+                            ?>
                         </select><br>
                         <label for="pracownik">Pracownik:</label><br>
                         <select id="pracownik" name="pracownik">
-                            <option value="test">TEST</option>
+                            <?php
+                            $sql2 = "SELECT id_pracownika, imie, nazwisko FROM pracownicy ORDER BY nazwisko, imie";
+                            $result2 = mysqli_query($connect, $sql2);
+                            while ($row2 = mysqli_fetch_array($result2)) {
+                                echo "<option value='{$row2['id_pracownika']}'>{$row2['id_pracownika']} {$row2['nazwisko']} {$row2['imie']}</option>\n";
+                            }
+                            ?>
                         </select><br>
                         <label for="cena_dz">Cena/dzień:</label><br>
                         <input type="text" id="cena_dz" name="cena_dz" readonly><br>
@@ -95,11 +107,11 @@
                         <label for="st_licz">Stan licznika:</label><br>
                         <input type="text" id="st_licz" name="st_licz" readonly><br>
                         <label for="data_wyp">Data wypożyczenia:</label><br>
-                        <input type="text" id="data_wyp" name="data_wyp" required><br>
+                        <input type="date" id="data_wyp" name="data_wyp" required><br>
                         <label for="data_zwr">Data zwrotu:</label><br>
-                        <input type="text" id="data_zwr" name="data_zwr"><br>
+                        <input type="date" id="data_zwr" name="data_zwr"><br>
                         <label for="zaliczka">Zaliczka:</label><br>
-                        <input type="text" id="zaliczka" name="zaliczka"><br>
+                        <input type="text" id="zaliczka" name="zaliczka" pattern="[0-9]*[.]?[0-9]+"><br>
                         <input type="submit" class='button' value="Utwórz">
                     </form>
 
