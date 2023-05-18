@@ -62,7 +62,7 @@
                         echo "<td>";
                         echo "  <form action='wypozyczenia.php' method='GET'>";
                         echo "    <input type='hidden' name='typ' value='wyp'>";
-                        echo "    <input type='hidden' name='id' value='" . $row['vin'] . "'>";
+                        echo "    <input type='hidden' name='vin' value='" . $row['vin'] . "'>";
                         echo "    <input type='submit' class='button' value='Wypożycz'>";
                         echo "  </form>";
 
@@ -72,10 +72,14 @@
                     echo "</table>";
                     break;
                 case "wyp":
+                    $vin = $_REQUEST['vin'];
+                    $sql = "SELECT marka, model, nr_rej, cena_km, cena_dz, st_licz FROM samochody WHERE vin = '$vin'";
+                    $result = mysqli_query($connect, $sql);
+                    $row = mysqli_fetch_array($result);
                     ?>
                     <h2>WYPOŻYCZENIE</h2>
                     <br>
-                    <h4>Samochód: Alfa Romeo</h4>
+                    <h4>Samochód: <?php echo $row['marka'] . " " . $row['model'] . " " . $row['nr_rej'] ?></h4>
                     <br>
                     <form action="wypozyczenia.php" method="GET">
                         <input type="hidden" name="typ" value="wypdb">
@@ -101,17 +105,17 @@
                             ?>
                         </select><br>
                         <label for="cena_dz">Cena/dzień:</label><br>
-                        <input type="text" id="cena_dz" name="cena_dz" readonly><br>
+                        <input type="text" id="cena_dz" name="cena_dz" value="<?php echo $row['cena_dz']; ?>" readonly><br>
                         <label for="cena_km">Cena/km:</label><br>
-                        <input type="text" id="cena_km" name="cena_km" readonly><br>
+                        <input type="text" id="cena_km" name="cena_km" value="<?php echo $row['cena_km']; ?>" readonly><br>
                         <label for="st_licz">Stan licznika:</label><br>
-                        <input type="text" id="st_licz" name="st_licz" readonly><br>
+                        <input type="text" id="st_licz" name="st_licz" value="<?php echo $row['st_licz']; ?>" readonly><br>
                         <label for="data_wyp">Data wypożyczenia:</label><br>
                         <input type="date" id="data_wyp" name="data_wyp" required><br>
                         <label for="data_zwr">Data zwrotu:</label><br>
                         <input type="date" id="data_zwr" name="data_zwr"><br>
                         <label for="zaliczka">Zaliczka:</label><br>
-                        <input type="text" id="zaliczka" name="zaliczka" pattern="[0-9]*[.]?[0-9]+"><br>
+                        <input type="text" id="zaliczka" name="zaliczka" pattern="[0-9]*[.]?[0-9]+" required><br>
                         <input type="submit" class='button' value="Utwórz">
                     </form>
 
