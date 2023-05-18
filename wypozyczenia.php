@@ -83,7 +83,7 @@
                     <br>
                     <form action="wypozyczenia.php" method="GET">
                         <input type="hidden" name="typ" value="wypdb">
-                        <input type="hidden" name="vin" value="">
+                        <input type="hidden" name="vin" value="<?php echo $vin; ?>">
                         <label for="klient">Klient:</label><br>
                         <select id="klient" name="klient">
                             <?php
@@ -121,25 +121,22 @@
 
                     <?php
                     break;
-                case "nowydb":
-                    $imie = $_REQUEST['imie'];
-                    $nazwisko = $_REQUEST['nazwisko'];
-                    $pesel = $_REQUEST['pesel'];
-                    $login = $_REQUEST['login'];
-                    $haslo = $_REQUEST['haslo'];
-                    $sql1 = "SELECT * FROM pracownicy WHERE login='$login'";
-                    $result = mysqli_query($connect, $sql1);
-                    if ($row = mysqli_fetch_array($result)) {
-                        echo "Podany login: $login istnieje już w systemie.<br>";
-                        echo "<button class='button' onClick='history.go(-1)'>Powrót</button>";
-                    } else {
-                        $sql2 = "INSERT INTO pracownicy (imie, nazwisko, pesel, login, haslo)
-                        VALUES ('$imie', '$nazwisko', '$pesel', '$login', '$haslo')";
-                        mysqli_query($connect, $sql2);
-                        echo "Dodano nowego użytkownika:<br>
-                            Imię: $imie<br>Nazwisko: $nazwisko<br>Login: $login<br>";
-                        echo "<button class='button' onClick=\"location.href='uzytkownicy.php'\">Powrót</button>";
-                    }
+                case "wypdb":
+                    $vin = $_REQUEST['vin'];
+                    $klient = $_REQUEST['klient'];
+                    $pracownik = $_REQUEST['pracownik'];
+                    $st_licz = $_REQUEST['st_licz'];
+                    $data_wyp = $_REQUEST['data_wyp'];
+                    $data_zwr = $_REQUEST['data_zwr'];
+                    $zaliczka = $_REQUEST['zaliczka'];
+                    $sql1 = "INSERT INTO wypozyczenia(id_samochodu, id_klienta, id_pracownika_wyp, data_wyp, data_zwr, stan_licz_wyp, zaliczka)
+                             VALUES ('$vin', $klient, $pracownik, '$data_wyp', '$data_zwr', '$st_licz', '$zaliczka')";
+                    mysqli_query($connect, $sql1);
+                    $sql2 = "UPDATE samochody SET status='Wypożyczony' WHERE vin='$vin'";
+                    mysqli_query($connect, $sql2);
+                    echo "Wypożyczono Samochód VIN:<br>
+                          $vin<br>";
+                    echo "<button class='button' onClick=\"location.href='wypozyczenia.php'\">Powrót</button>";
                     break;
                 case "edytuj":
                     $id = $_REQUEST['id'];
